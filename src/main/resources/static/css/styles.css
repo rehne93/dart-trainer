@@ -1,0 +1,88 @@
+   body {
+            font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background: #f7f9fb;
+            color: #333;
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            background: #1e88e5;
+            color: white;
+            padding: 1.5rem;
+            text-align: center;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        main {
+            max-width: 600px;
+            margin: 3rem auto;
+            background: white;
+            border-radius: 12px;
+            padding: 2rem;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+
+        h1 {
+            margin-bottom: 1rem;
+        }
+
+        .number {
+            font-size: 3rem;
+            font-weight: bold;
+            color: #2e7d32;
+            margin: 1.5rem 0;
+        }
+
+        .buttons {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        button {
+            font-size: 1.1rem;
+            padding: 0.7rem 1.5rem;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s ease-in-out;
+        }
+
+        button[name="check"][value="true"] {
+            background-color: #4caf50;
+            color: white;
+        }
+
+        button[name="check"][value="true"]:hover {
+            background-color: #43a047;
+        }
+
+        button[name="check"][value="false"] {
+            background-color: #f44336;
+            color: white;
+        }
+
+        button[name="check"][value="false"]:hover {
+            background-color: #e53935;
+        }
+
+        .stats {
+            text-align: left;
+            margin-top: 2rem;
+            border-top: 1px solid #ddd;
+            padding-top: 1.5rem;
+        }
+
+        .stats h2 {
+            color: #1e88e5;
+            margin-bottom: 1rem;
+        }
+
+        .stat-row {
+            display: flex;
+            justify-content: space-between;
+            margin: 0.3rem 0;
+        }
