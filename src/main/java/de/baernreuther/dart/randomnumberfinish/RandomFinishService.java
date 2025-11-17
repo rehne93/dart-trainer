@@ -1,5 +1,8 @@
 package de.baernreuther.dart.randomnumberfinish;
 
+import de.baernreuther.dart.randomnumberfinish.model.RandomNumberDto;
+import de.baernreuther.dart.randomnumberfinish.model.RandomNumberFinishState;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
@@ -9,9 +12,11 @@ import java.util.concurrent.ConcurrentHashMap;
 
 @Service
 @Slf4j
+@RequiredArgsConstructor
 public class RandomFinishService {
 
     private final Map<String, RandomNumberFinishState> checkMap = new ConcurrentHashMap<>();
+    private final DifficultyCalculator difficultyCalculator;
 
     public RandomNumberFinishState refreshCurrentState(int min, int max, String userName) {
         Random random = new Random();
@@ -35,7 +40,7 @@ public class RandomFinishService {
         var state = this.checkMap.get(userName);
         if (randomNumberDto.isCheck()) {
             state.getCheckedNumbers().add(state.getCurrentNumber());
-            state.addPoints(1); // TODO: Berechnen
+            state.addPoints(this.difficultyCalculator.getDifficulty(randomNumberDto.getCurrentNumber()));
         } else {
             state.incrementMissedTries();
         }
@@ -46,6 +51,11 @@ public class RandomFinishService {
             return this.refreshCurrentState(2, 100, userName);
         }
         return this.checkMap.get(userName);
+    }
+
+
+    public void reset(String username) {
+        this.checkMap.remove(username);
     }
 
 }

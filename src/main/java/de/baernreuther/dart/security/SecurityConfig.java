@@ -16,13 +16,13 @@ public class SecurityConfig {
     @Bean
     public UserDetailsService userDetailsService() {
         UserDetails admin = User.withDefaultPasswordEncoder()
-                .username("rene")
+                .username("board1")
                 .password("test")
                 .roles("player")
                 .build();
 
         UserDetails user1 = User.withDefaultPasswordEncoder()
-                .username("player2")
+                .username("board2")
                 .password("test")
                 .roles("USER")
                 .build();

@@ -86,3 +86,8 @@
             justify-content: space-between;
             margin: 0.3rem 0;
         }
+
+        small {
+            margin-bottom: 0.5rem;
+            color: lightgrey;
+        }

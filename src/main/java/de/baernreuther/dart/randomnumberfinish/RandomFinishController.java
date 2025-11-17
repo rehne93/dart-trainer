@@ -1,6 +1,8 @@
 package de.baernreuther.dart.randomnumberfinish;
 
 
+import de.baernreuther.dart.randomnumberfinish.model.RandomNumberDto;
+import de.baernreuther.dart.randomnumberfinish.model.RandomNumberFinishState;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
@@ -18,14 +20,19 @@ import java.security.Principal;
 public class RandomFinishController {
 
     private final RandomFinishService randomFinishService;
+    private final DifficultyCalculator difficultyCalculator;
 
     @GetMapping("index")
     public String index(Model model, @RequestParam(value = "reset", defaultValue = "true") boolean reset, Principal principal) {
+        RandomNumberFinishState state;
         if (reset) {
-            model.addAttribute("state", randomFinishService.refreshCurrentState(2, 100, principal.getName()));
+            state = randomFinishService.refreshCurrentState(2, 100, principal.getName());
         } else {
-            model.addAttribute("state", randomFinishService.getCurrentState(principal.getName()));
+            state =  randomFinishService.getCurrentState(principal.getName());
         }
+        model.addAttribute("state", state);
+        model.addAttribute("difficulty", difficultyCalculator.getDifficulty(state.getCurrentNumber()));
+        model.addAttribute("user", principal.getName());
         return "index";
     }
 
