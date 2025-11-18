@@ -10,7 +10,8 @@ import java.util.List;
 @Builder
 public class RandomNumberFinishState {
     private String userName;
-    private int currentNumber;
+    @Builder.Default
+    private int currentNumber = 2;
     @Builder.Default
     private int pointsTotal = 0;
     @Builder.Default
