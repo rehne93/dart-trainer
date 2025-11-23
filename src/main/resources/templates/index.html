@@ -7,54 +7,61 @@
 </head>
 <body>
 
-<header>
+<header class="header">
     <h1>Random Finish Generator</h1>
     <small>Eingeloggter User: <span th:text="${user}"></span></small>
 </header>
 
-<main>
+<main class="container">
     <h2>Folgende Zahl ist zu beenden:</h2>
+
     <div class="number" th:text="${state.currentNumber}">123</div>
-    <small th:text="'Liefert ' + ${difficulty} + ' Punkte'"></small>
+    <small class="points-info" th:text="'Liefert ' + ${difficulty} + ' Punkte'"></small>
 
     <div class="buttons">
         <form id="checkForm" th:action="@{/finish}" th:object="${state}" method="post">
             <input type="hidden" th:field="*{currentNumber}"/>
-            <button type="submit" name="check" value="true">✅ Check</button>
+            <button class="btn success" type="submit" name="check" value="true">✅ Check</button>
         </form>
 
         <form id="missForm" th:action="@{/finish}" th:object="${state}" method="post">
             <input type="hidden" th:field="*{currentNumber}"/>
-            <button type="submit" name="check" value="false">❌ Miss</button>
+            <button class="btn danger" type="submit" name="check" value="false">❌ Miss</button>
         </form>
     </div>
 
     <div class="stats">
         <h2>Statistiken</h2>
-        <div class="stat-row">
-            <span>Aktuelle Punktzahl:</span>
-            <strong th:text="${state.pointsTotal}">0</strong>
-        </div>
-        <div class="stat-row">
-            <span>Erfolgreiche Checks:</span>
-            <strong th:text="${state.checkedNumbers.size()}">0</strong>
-        </div>
-        <div class="stat-row">
-            <span>Fehlgeschlagene Checks:</span>
-            <strong th:text="${state.missedChecks}">0</strong>
-        </div>
+
+        <div class="stat-row"><span>Aktuelle Punktzahl:</span><strong th:text="${state.pointsTotal}">0</strong></div>
+        <div class="stat-row"><span>Erfolgreiche Checks:</span><strong th:text="${state.checkedNumbers.size()}">0</strong></div>
+        <div class="stat-row"><span>Fehlgeschlagene Checks:</span><strong th:text="${state.missedChecks}">0</strong></div>
+
         <hr>
+
         <div class="stat-row">
             <span>Quote:</span>
-            <strong th:text="${#numbers.formatDecimal(state.getQuote() * 100, 1, 2, 'COMMA')} + ' %'">0</strong>
+            <strong th:text="${#numbers.formatDecimal(state.getQuote() * 100, 1, 2, 'COMMA')} + ' %'">0 %</strong>
         </div>
     </div>
 
-    <button id="reset">Reset</button>
+    <hr>
+
+    <button id="reset" class="btn reset">Reset</button>
+
+    <div class="inputs">
+        <label>Kleinstes Finish:
+            <input id="min" type="number" th:value="${gameconfig.min}">
+        </label>
+        <label>Größtes Finish:
+            <input id="max" type="number" th:value="${gameconfig.max}">
+        </label>
+    </div>
 </main>
 
 <script th:src="@{/js/helper.js}"></script>
-<script th:src="@{js/reset.js}"></script>
+<script th:src="@{/js/reset.js}"></script>
+<script th:src="@{/js/change-config.js}"></script>
 
 </body>
 </html>

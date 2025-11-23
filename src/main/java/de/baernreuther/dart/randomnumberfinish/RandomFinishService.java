@@ -17,10 +17,11 @@ public class RandomFinishService {
 
     private final Map<String, RandomNumberFinishState> checkMap = new ConcurrentHashMap<>();
     private final DifficultyCalculator difficultyCalculator;
+    private final GameConfiguration gameConfiguration;
 
-    public RandomNumberFinishState refreshCurrentState(int min, int max, String userName) {
+    public RandomNumberFinishState refreshCurrentState(String userName) {
         Random random = new Random();
-        int randomNumber = random.nextInt(min, max + 1);
+        int randomNumber = random.nextInt(this.gameConfiguration.getMin(), this.gameConfiguration.getMax() + 1);
         RandomNumberFinishState state = null;
         if (checkMap.containsKey(userName)) {
             state = checkMap.get(userName);
@@ -48,7 +49,7 @@ public class RandomFinishService {
 
     public RandomNumberFinishState getCurrentState(String userName) {
         if (!this.checkMap.containsKey(userName)) {
-            return this.refreshCurrentState(2, 100, userName);
+            return this.refreshCurrentState(userName);
         }
         return this.checkMap.get(userName);
     }

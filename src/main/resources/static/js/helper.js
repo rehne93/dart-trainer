@@ -1,11 +1,11 @@
 document.addEventListener('keydown', function(event) {
     if (event.repeat) return;
 
-    if (event.key === '1') {
+    if (event.key === 'q') {
         document.querySelector('#checkForm button[type="submit"]').click();
     }
 
-    if (event.key === '2') {
+    if (event.key === 'w') {
         document.querySelector('#missForm button[type="submit"]').click();
     }
 });
