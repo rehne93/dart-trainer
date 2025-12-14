@@ -43,6 +43,13 @@ public class RandomFinishController {
         return "redirect:index" + "?reset=" + randomNumber.isCheck();
     }
 
+    @PostMapping("undo")
+    public String undo(Principal principal) {
+        randomFinishService.undo(principal.getName());
+        return "redirect:index" + "?reset=false";
+
+    }
+
     @PostMapping("configure")
     @ResponseBody
     public void configure(@RequestBody ConfigDto configDto) {

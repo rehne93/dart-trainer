@@ -1,5 +1,6 @@
 package de.baernreuther.dart.randomnumberfinish.model;
 
+import de.baernreuther.dart.randomnumberfinish.actions.FinishAction;
 import lombok.Builder;
 import lombok.Data;
 
@@ -19,12 +20,22 @@ public class RandomNumberFinishState {
     @Builder.Default
     private int missedChecks = 0;
 
+    @Builder.Default
+    private List<FinishAction> actions = new ArrayList<>();
+
     public void addPoints(int points) {
         this.pointsTotal += points;
     }
 
+    public void removePoints(int points) {
+        this.pointsTotal -= points;
+    }
+
     public void incrementMissedTries() {
         this.missedChecks++;
+    }
+    public void decrementMissedTries() {
+        this.missedChecks--;
     }
 
     public float getQuote() {
@@ -34,4 +45,13 @@ public class RandomNumberFinishState {
         return (float) checkedNumbers.size() / (missedChecks+checkedNumbers.size());
     }
 
+    public RandomNumberFinishState executeAction(FinishAction action) {
+        this.actions.add(action);
+        return action.execute(this);
+    }
+
+    public RandomNumberFinishState undoAction() {
+        var lastAction = this.actions.getLast();
+        return lastAction.execute(this);
+    }
 }

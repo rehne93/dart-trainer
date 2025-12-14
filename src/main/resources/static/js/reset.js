@@ -13,3 +13,4 @@ function reset() {
 document.getElementById('reset').addEventListener('click', () => {
     reset();
 });
+

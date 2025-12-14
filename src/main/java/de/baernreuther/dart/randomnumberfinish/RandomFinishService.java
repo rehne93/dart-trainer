@@ -1,5 +1,7 @@
 package de.baernreuther.dart.randomnumberfinish;
 
+import de.baernreuther.dart.randomnumberfinish.actions.CheckAction;
+import de.baernreuther.dart.randomnumberfinish.actions.MissAction;
 import de.baernreuther.dart.randomnumberfinish.model.RandomNumberDto;
 import de.baernreuther.dart.randomnumberfinish.model.RandomNumberFinishState;
 import lombok.RequiredArgsConstructor;
@@ -40,10 +42,9 @@ public class RandomFinishService {
     public void check(RandomNumberDto randomNumberDto, String userName) {
         var state = this.checkMap.get(userName);
         if (randomNumberDto.isCheck()) {
-            state.getCheckedNumbers().add(state.getCurrentNumber());
-            state.addPoints(this.difficultyCalculator.getDifficulty(randomNumberDto.getCurrentNumber()));
+            state.executeAction(new CheckAction(this.difficultyCalculator));
         } else {
-            state.incrementMissedTries();
+            state.executeAction(new MissAction());
         }
     }
 
@@ -52,6 +53,15 @@ public class RandomFinishService {
             return this.refreshCurrentState(userName);
         }
         return this.checkMap.get(userName);
+    }
+
+    public void undo(String userName) {
+        if(!this.checkMap.containsKey(userName)) {
+            log.warn("Undo without State in map by {}", userName);
+            return;
+        }
+
+        this.checkMap.put(userName, this.checkMap.get(userName).undoAction());
     }
 
 
