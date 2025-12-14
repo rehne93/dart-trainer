@@ -21,12 +21,12 @@
     <div class="buttons">
         <form id="checkForm" th:action="@{/finish}" th:object="${state}" method="post">
             <input type="hidden" th:field="*{currentNumber}"/>
-            <button class="btn success" type="submit" name="check" value="true">✅ Check</button>
+            <button onclick="showCheckSnackbar(true)" class="btn success" type="submit" name="check" value="true">✅ Check</button>
         </form>
 
         <form id="missForm" th:action="@{/finish}" th:object="${state}" method="post">
             <input type="hidden" th:field="*{currentNumber}"/>
-            <button class="btn danger" type="submit" name="check" value="false">❌ Miss</button>
+            <button onclick="showCheckSnackbar(false)" class="btn danger" type="submit" name="check" value="false">❌ Miss</button>
         </form>
     </div>
 
@@ -57,11 +57,14 @@
             <input id="max" type="number" th:value="${gameconfig.max}">
         </label>
     </div>
+    <div id="snackbar"  th:text="'Check!'"></div>
+
 </main>
 
 <script th:src="@{/js/helper.js}"></script>
 <script th:src="@{/js/reset.js}"></script>
 <script th:src="@{/js/change-config.js}"></script>
+<script th:src="@{/js/snackbar.js}"></script>
 
 </body>
 </html>
