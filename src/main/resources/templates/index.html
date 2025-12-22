@@ -47,7 +47,16 @@
             <span>Quote:</span>
             <strong th:text="${#numbers.formatDecimal(state.getQuote() * 100, 1, 2, 'COMMA')} + ' %'">0 %</strong>
         </div>
+
+        <hr>
+        <div class="stat-row">
+            <span>Bisherige Checks:</span>
+            <th:block th:each="check: ${state.checkedNumbers}">
+                <strong th:text="${check}"/>
+            </th:block>
+        </div>
     </div>
+
 
     <hr>
 
