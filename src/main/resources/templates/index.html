@@ -16,6 +16,7 @@
     <h2>Folgende Zahl ist zu beenden:</h2>
 
     <div class="number" th:text="${state.currentNumber}">123</div>
+    <span class="points-info" th:text="${finish}"/>
     <small class="points-info" th:text="'Liefert ' + ${difficulty} + ' Punkte'"></small>
 
     <div class="buttons">
