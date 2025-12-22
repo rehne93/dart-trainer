@@ -21,6 +21,7 @@ public class CheckAction implements FinishAction {
         var lastCheck = state.getCheckedNumbers().getLast();
         state.getCheckedNumbers().removeLast();
         state.removePoints(this.difficultyCalculator.getDifficulty(lastCheck));
+        state.setCurrentNumber(lastCheck);
         return state;
     }
 }

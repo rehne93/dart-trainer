@@ -22,7 +22,7 @@ public class RandomFinishController {
     private final DifficultyCalculator difficultyCalculator;
     private final GameConfiguration gameConfiguration;
 
-    @GetMapping("index")
+    @GetMapping({"index", "/"})
     public String index(Model model, @RequestParam(value = "reset", defaultValue = "true") boolean reset, Principal principal) {
         RandomNumberFinishState state;
         if (reset) {

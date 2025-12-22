@@ -52,6 +52,6 @@ public class RandomNumberFinishState {
 
     public RandomNumberFinishState undoAction() {
         var lastAction = this.actions.getLast();
-        return lastAction.execute(this);
+        return lastAction.undo(this);
     }
 }
