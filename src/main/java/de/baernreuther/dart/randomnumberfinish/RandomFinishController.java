@@ -2,7 +2,7 @@ package de.baernreuther.dart.randomnumberfinish;
 
 
 import de.baernreuther.dart.randomnumberfinish.model.RandomNumberDto;
-import de.baernreuther.dart.randomnumberfinish.model.RandomNumberFinishState;
+import de.baernreuther.dart.randomnumberfinish.database.RandomNumberFinishState;
 import de.baernreuther.dart.utility.FinishGenerator;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

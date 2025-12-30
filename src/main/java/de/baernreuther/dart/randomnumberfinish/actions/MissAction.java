@@ -1,6 +1,6 @@
 package de.baernreuther.dart.randomnumberfinish.actions;
 
-import de.baernreuther.dart.randomnumberfinish.model.RandomNumberFinishState;
+import de.baernreuther.dart.randomnumberfinish.database.RandomNumberFinishState;
 
 public class MissAction implements FinishAction{
 

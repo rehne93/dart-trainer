@@ -1,7 +1,7 @@
 package de.baernreuther.dart.randomnumberfinish.actions;
 
 import de.baernreuther.dart.randomnumberfinish.DifficultyCalculator;
-import de.baernreuther.dart.randomnumberfinish.model.RandomNumberFinishState;
+import de.baernreuther.dart.randomnumberfinish.database.RandomNumberFinishState;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor

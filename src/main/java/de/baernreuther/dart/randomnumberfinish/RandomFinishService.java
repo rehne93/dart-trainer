@@ -2,8 +2,9 @@ package de.baernreuther.dart.randomnumberfinish;
 
 import de.baernreuther.dart.randomnumberfinish.actions.CheckAction;
 import de.baernreuther.dart.randomnumberfinish.actions.MissAction;
+import de.baernreuther.dart.randomnumberfinish.database.RandomNumberFinishState;
+import de.baernreuther.dart.randomnumberfinish.database.RandomNumberFinishStateService;
 import de.baernreuther.dart.randomnumberfinish.model.RandomNumberDto;
-import de.baernreuther.dart.randomnumberfinish.model.RandomNumberFinishState;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -17,56 +18,41 @@ import java.util.concurrent.ConcurrentHashMap;
 @RequiredArgsConstructor
 public class RandomFinishService {
 
-    private final Map<String, RandomNumberFinishState> checkMap = new ConcurrentHashMap<>();
+    private final RandomNumberFinishStateService finishStateService;
     private final DifficultyCalculator difficultyCalculator;
     private final GameConfiguration gameConfiguration;
 
     public RandomNumberFinishState refreshCurrentState(String userName) {
         Random random = new Random();
         int randomNumber = random.nextInt(this.gameConfiguration.getMin(), this.gameConfiguration.getMax() + 1);
-        RandomNumberFinishState state = null;
-        if (checkMap.containsKey(userName)) {
-            state = checkMap.get(userName);
-            state.setCurrentNumber(randomNumber);
-            checkMap.put(userName, state);
-        } else {
-            state = RandomNumberFinishState.builder()
-                    .currentNumber(randomNumber)
-                    .userName(userName)
-                    .build();
-            checkMap.put(userName, state);
-        }
-        return state;
+        RandomNumberFinishState state = this.finishStateService.getOrCreate(userName);
+        state.setCurrentNumber(randomNumber);
+        return this.finishStateService.save(state);
     }
 
     public void check(RandomNumberDto randomNumberDto, String userName) {
-        var state = this.checkMap.get(userName);
+        var state = finishStateService.getOrCreate(userName);
         if (randomNumberDto.isCheck()) {
             state.executeAction(new CheckAction(this.difficultyCalculator));
         } else {
             state.executeAction(new MissAction());
         }
+        this.finishStateService.save(state);
     }
 
     public RandomNumberFinishState getCurrentState(String userName) {
-        if (!this.checkMap.containsKey(userName)) {
-            return this.refreshCurrentState(userName);
-        }
-        return this.checkMap.get(userName);
+        return this.finishStateService.getOrCreate(userName);
     }
 
     public void undo(String userName) {
-        if(!this.checkMap.containsKey(userName)) {
-            log.warn("Undo without State in map by {}", userName);
-            return;
-        }
-
-        this.checkMap.put(userName, this.checkMap.get(userName).undoAction());
+        var state = this.finishStateService.getOrCreate(userName);
+        state.undoAction();
+        this.finishStateService.save(state);
     }
 
 
     public void reset(String username) {
-        this.checkMap.remove(username);
+        this.finishStateService.remove(username);
     }
 
 }
