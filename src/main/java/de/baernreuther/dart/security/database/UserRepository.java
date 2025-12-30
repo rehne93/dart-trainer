@@ -1,5 +1,6 @@
 package de.baernreuther.dart.security.database;
 
+import de.baernreuther.dart.security.database.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;

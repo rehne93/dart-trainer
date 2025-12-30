@@ -1,6 +1,7 @@
 package de.baernreuther.dart.randomnumberfinish.database;
 
-import de.baernreuther.dart.security.database.User;
+import de.baernreuther.dart.randomnumberfinish.database.entity.RandomNumberFinishState;
+import de.baernreuther.dart.security.database.entity.User;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;

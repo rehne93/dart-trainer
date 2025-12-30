@@ -1,11 +1,8 @@
 package de.baernreuther.dart.randomnumberfinish;
 
-import org.springframework.stereotype.Service;
-
-@Service
 public class DifficultyCalculator {
 
-    public int getDifficulty(int number) {
+    public static int getDifficulty(int number) {
         if (number <= 40) {
             return 1;
         }
@@ -18,6 +15,9 @@ public class DifficultyCalculator {
         if (number <= 100) {
             return 4;
         }
-        return 5;
+        if (number <= 130) {
+            return 5;
+        }
+        return 6;
     }
 }

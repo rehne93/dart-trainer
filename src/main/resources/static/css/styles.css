@@ -134,7 +134,26 @@ body {
         flex-direction: column;
     }
 }
+.label {
+    font-weight: 600;
+    white-space: nowrap;
+    margin-right: 0.5rem;
+}
 
+.chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+}
+
+.chip {
+    background: #eef2ff;
+    color: #3730a3;
+    padding: 0.2rem 0.6rem;
+    border-radius: 999px;
+    font-size: 0.85rem;
+    font-weight: 600;
+}
 /** Snackbar */
 #snackbar {
     visibility: hidden;

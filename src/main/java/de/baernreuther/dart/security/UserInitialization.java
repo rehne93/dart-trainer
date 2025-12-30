@@ -1,6 +1,6 @@
 package de.baernreuther.dart.security;
 
-import de.baernreuther.dart.security.database.User;
+import de.baernreuther.dart.security.database.entity.User;
 import de.baernreuther.dart.security.database.UserRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;

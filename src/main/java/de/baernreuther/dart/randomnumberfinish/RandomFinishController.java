@@ -2,7 +2,7 @@ package de.baernreuther.dart.randomnumberfinish;
 
 
 import de.baernreuther.dart.randomnumberfinish.model.RandomNumberDto;
-import de.baernreuther.dart.randomnumberfinish.database.RandomNumberFinishState;
+import de.baernreuther.dart.randomnumberfinish.database.entity.RandomNumberFinishState;
 import de.baernreuther.dart.utility.FinishGenerator;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -20,7 +20,6 @@ import java.security.Principal;
 public class RandomFinishController {
 
     private final RandomFinishService randomFinishService;
-    private final DifficultyCalculator difficultyCalculator;
     private final GameConfiguration gameConfiguration;
     private final FinishGenerator finishGenerator;
 
@@ -34,7 +33,7 @@ public class RandomFinishController {
         }
         model.addAttribute("state", state);
         model.addAttribute("gameconfig", this.gameConfiguration);
-        model.addAttribute("difficulty", this.difficultyCalculator.getDifficulty(state.getCurrentNumber()));
+        model.addAttribute("difficulty", DifficultyCalculator.getDifficulty(state.getCurrentNumber()));
         model.addAttribute("finish", this.finishGenerator.generateFinish(state.getCurrentNumber()));
         model.addAttribute("user", principal.getName());
         return "index";
@@ -44,6 +43,12 @@ public class RandomFinishController {
     public String finish(@ModelAttribute RandomNumberDto randomNumber, Principal principal) {
         randomFinishService.check(randomNumber, principal.getName());
         return "redirect:index" + "?reset=" + randomNumber.isCheck();
+    }
+
+    @PostMapping("miss")
+    public String miss(Principal principal) {
+        randomFinishService.miss(principal.getName());
+        return "redirect:index" + "?reset=false";
     }
 
     @PostMapping("undo")

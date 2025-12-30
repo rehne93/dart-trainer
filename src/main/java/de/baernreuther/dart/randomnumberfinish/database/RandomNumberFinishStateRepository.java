@@ -1,7 +1,8 @@
 package de.baernreuther.dart.randomnumberfinish.database;
 
 
-import de.baernreuther.dart.security.database.User;
+import de.baernreuther.dart.randomnumberfinish.database.entity.RandomNumberFinishState;
+import de.baernreuther.dart.security.database.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 

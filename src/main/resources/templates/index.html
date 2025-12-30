@@ -22,25 +22,30 @@
     <div class="buttons">
         <form id="checkForm" th:action="@{/finish}" th:object="${state}" method="post">
             <input type="hidden" th:field="*{currentNumber}"/>
-            <button onclick="showCheckSnackbar(true)" class="btn success" type="submit" name="check" value="true">✅ Check</button>
+            <button onclick="showCheckSnackbar(true)" class="btn success" type="submit" name="check" value="true">✅
+                Check
+            </button>
         </form>
 
-        <form id="missForm" th:action="@{/finish}" th:object="${state}" method="post">
-            <input type="hidden" th:field="*{currentNumber}"/>
-            <button onclick="showCheckSnackbar(false)" class="btn danger" type="submit" name="check" value="false">❌ Miss</button>
+        <form id="missForm" th:action="@{/miss}" method="post">
+            <button onclick="showCheckSnackbar(false)" class="btn danger" type="submit" name="check" value="false">❌
+                Miss
+            </button>
         </form>
 
-<!--        <form id="undoForm" th:action="@{/undo}" method="post">-->
-<!--            <button class="btn" type="submit" name="undo">↩️ Undo</button>-->
-<!--        </form>-->
+        <form id="undoForm" th:action="@{/undo}" method="post">
+            <button class="btn" type="submit" name="undo">↩️ Undo</button>
+        </form>
     </div>
 
     <div class="stats">
         <h2>Statistiken</h2>
 
         <div class="stat-row"><span>Aktuelle Punktzahl:</span><strong th:text="${state.pointsTotal}">0</strong></div>
-        <div class="stat-row"><span>Erfolgreiche Checks:</span><strong th:text="${state.checkedNumbers.size()}">0</strong></div>
-        <div class="stat-row"><span>Fehlgeschlagene Checks:</span><strong th:text="${state.missedChecks}">0</strong></div>
+        <div class="stat-row"><span>Erfolgreiche Checks:</span><strong
+                th:text="${state.checkedNumbers.size()}">0</strong></div>
+        <div class="stat-row"><span>Fehlgeschlagene Checks:</span><strong th:text="${state.missedChecks}">0</strong>
+        </div>
 
         <hr>
 
@@ -51,10 +56,14 @@
 
         <hr>
         <div class="stat-row">
-            <span>Bisherige Checks:</span>
-            <th:block th:each="check: ${state.checkedNumbers}">
-                <strong th:text="${check}"/>
-            </th:block>
+            <span class="label">Bisherige Checks:</span>
+
+            <div class="chips">
+                <span class="chip"
+                      th:each="check : ${state.checkedNumbers}"
+                      th:text="${check}">
+                </span>
+            </div>
         </div>
     </div>
 
@@ -72,7 +81,7 @@
             <input id="max" type="number" th:value="${gameconfig.max}">
         </label>
     </div>
-    <div id="snackbar"  th:text="'Check!'"></div>
+    <div id="snackbar" th:text="'Check!'"></div>
 
 </main>
 
