@@ -1,3 +1,3 @@
 # TODOS
-- Mögliche Finishes anzeigen
+- Dockerfile soll mit builden
 - Zweiten Spielmodus implementieren bspw 121

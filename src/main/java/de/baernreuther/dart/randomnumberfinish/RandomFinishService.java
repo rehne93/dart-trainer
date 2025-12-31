@@ -1,72 +1,53 @@
 package de.baernreuther.dart.randomnumberfinish;
 
-import de.baernreuther.dart.randomnumberfinish.actions.CheckAction;
-import de.baernreuther.dart.randomnumberfinish.actions.MissAction;
+import de.baernreuther.dart.randomnumberfinish.database.RandomNumberFinishStateService;
+import de.baernreuther.dart.randomnumberfinish.database.entity.FinishAction;
+import de.baernreuther.dart.randomnumberfinish.database.entity.FinishActionType;
+import de.baernreuther.dart.randomnumberfinish.database.entity.RandomNumberFinishState;
 import de.baernreuther.dart.randomnumberfinish.model.RandomNumberDto;
-import de.baernreuther.dart.randomnumberfinish.model.RandomNumberFinishState;
+import de.baernreuther.dart.utility.RandomNumberGenerator;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
-
-import java.util.Map;
-import java.util.Random;
-import java.util.concurrent.ConcurrentHashMap;
 
 @Service
 @Slf4j
 @RequiredArgsConstructor
 public class RandomFinishService {
 
-    private final Map<String, RandomNumberFinishState> checkMap = new ConcurrentHashMap<>();
-    private final DifficultyCalculator difficultyCalculator;
+    private final RandomNumberFinishStateService finishStateService;
     private final GameConfiguration gameConfiguration;
 
     public RandomNumberFinishState refreshCurrentState(String userName) {
-        Random random = new Random();
-        int randomNumber = random.nextInt(this.gameConfiguration.getMin(), this.gameConfiguration.getMax() + 1);
-        RandomNumberFinishState state = null;
-        if (checkMap.containsKey(userName)) {
-            state = checkMap.get(userName);
-            state.setCurrentNumber(randomNumber);
-            checkMap.put(userName, state);
-        } else {
-            state = RandomNumberFinishState.builder()
-                    .currentNumber(randomNumber)
-                    .userName(userName)
-                    .build();
-            checkMap.put(userName, state);
-        }
-        return state;
+        int randomNumber = RandomNumberGenerator.getRandomNumber(this.gameConfiguration.getMin(), this.gameConfiguration.getMax() + 1);
+        RandomNumberFinishState state = this.finishStateService.getOrCreate(userName);
+        state.setCurrentNumber(randomNumber);
+        return this.finishStateService.save(state);
     }
 
     public void check(RandomNumberDto randomNumberDto, String userName) {
-        var state = this.checkMap.get(userName);
-        if (randomNumberDto.isCheck()) {
-            state.executeAction(new CheckAction(this.difficultyCalculator));
-        } else {
-            state.executeAction(new MissAction());
-        }
+        var state = finishStateService.getOrCreate(userName);
+        state.addAndExecute(new FinishAction(FinishActionType.CHECK, this.gameConfiguration.getMin(), this.gameConfiguration.getMax()));
+        this.finishStateService.save(state);
     }
 
-    public RandomNumberFinishState getCurrentState(String userName) {
-        if (!this.checkMap.containsKey(userName)) {
-            return this.refreshCurrentState(userName);
-        }
-        return this.checkMap.get(userName);
+    public void miss(String userName) {
+        var state = finishStateService.getOrCreate(userName);
+        state.addAndExecute(new FinishAction(FinishActionType.MISS, this.gameConfiguration.getMin(), this.gameConfiguration.getMax()));
+        this.finishStateService.save(state);
     }
 
     public void undo(String userName) {
-        if(!this.checkMap.containsKey(userName)) {
-            log.warn("Undo without State in map by {}", userName);
-            return;
-        }
-
-        this.checkMap.put(userName, this.checkMap.get(userName).undoAction());
+        var state = this.finishStateService.getOrCreate(userName);
+        state.removeAndUndo();
+        this.finishStateService.save(state);
     }
-
 
     public void reset(String username) {
-        this.checkMap.remove(username);
+        this.finishStateService.remove(username);
     }
 
+    public RandomNumberFinishState getCurrentState(String userName) {
+        return this.finishStateService.getOrCreate(userName);
+    }
 }
