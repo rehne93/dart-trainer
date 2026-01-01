@@ -19,7 +19,7 @@ public class RandomFinishService {
     private final GameConfiguration gameConfiguration;
 
     public RandomNumberFinishState refreshCurrentState(String userName) {
-        int randomNumber = RandomNumberGenerator.getRandomNumber(this.gameConfiguration.getMin(), this.gameConfiguration.getMax() + 1);
+        int randomNumber = RandomNumberGenerator.getRandomNumber(this.gameConfiguration.getMin(), this.gameConfiguration.getMax());
         RandomNumberFinishState state = this.finishStateService.getOrCreate(userName);
         state.setCurrentNumber(randomNumber);
         return this.finishStateService.save(state);
