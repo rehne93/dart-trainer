@@ -17,7 +17,13 @@ java {
 bootJar {
     archiveFileName = 'app.jar'
 }
-
+jar {
+	manifest {
+		attributes(
+				'Main-Class': 'de.baernreuther.dart.DartApplication'
+		)
+	}
+}
 configurations {
 	compileOnly {
 		extendsFrom annotationProcessor

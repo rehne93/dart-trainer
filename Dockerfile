@@ -10,7 +10,7 @@ RUN ./gradlew dependencies --no-daemon
 
 # Jetzt den Rest des Projekts
 COPY . .
-RUN ./gradlew clean build -x test --no-daemon
+RUN ./gradlew clean bootJar -x test --no-daemon
 
 # -------- Runtime Stage --------
 FROM ibm-semeru-runtimes:open-25-jre
