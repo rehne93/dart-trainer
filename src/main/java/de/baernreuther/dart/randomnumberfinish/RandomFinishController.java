@@ -20,7 +20,7 @@ import java.security.Principal;
 public class RandomFinishController {
 
     private final RandomFinishService randomFinishService;
-    private final GameConfiguration gameConfiguration;
+    private final RandomNumberFinishGameConfiguration randomNumberFinishGameConfiguration;
     private final FinishGenerator finishGenerator;
 
     @GetMapping({"index", "/"})
@@ -32,11 +32,11 @@ public class RandomFinishController {
             state = randomFinishService.getCurrentState(principal.getName());
         }
         model.addAttribute("state", state);
-        model.addAttribute("gameconfig", this.gameConfiguration);
+        model.addAttribute("gameconfig", this.randomNumberFinishGameConfiguration);
         model.addAttribute("difficulty", DifficultyCalculator.getDifficulty(state.getCurrentNumber()));
         model.addAttribute("finish", this.finishGenerator.generateFinish(state.getCurrentNumber()));
         model.addAttribute("user", principal.getName());
-        return "index";
+        return "randomnumberfinish";
     }
 
     @PostMapping("finish")
@@ -61,12 +61,12 @@ public class RandomFinishController {
     @PostMapping("configure")
     @ResponseBody
     public void configure(@RequestBody ConfigDto configDto) {
-        if(configDto.min < 2 || configDto.max > 170) {
+        if(configDto.min < 2 || configDto.max > 170 || (configDto.min > configDto.max)) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Invalid min or max config");
         }
 
-        this.gameConfiguration.setMax(configDto.max);
-        this.gameConfiguration.setMin(configDto.min);
+        this.randomNumberFinishGameConfiguration.setMax(configDto.max);
+        this.randomNumberFinishGameConfiguration.setMin(configDto.min);
     }
 
     @GetMapping("reset")

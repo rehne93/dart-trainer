@@ -5,8 +5,9 @@ import org.springframework.stereotype.Service;
 
 @Service
 @Data
-public class GameConfiguration {
+public class RandomNumberFinishGameConfiguration {
 
     private int min = 2;
     private int max = 100;
+
 }

@@ -75,10 +75,10 @@
 
     <div class="inputs">
         <label>Kleinstes Finish:
-            <input id="min" type="number" th:value="${gameconfig.min}">
+            <input id="min" type="number" min="2" max="169" th:value="${gameconfig.min}">
         </label>
         <label>Größtes Finish:
-            <input id="max" type="number" th:value="${gameconfig.max}">
+            <input id="max" type="number" min="3" max="170" th:value="${gameconfig.max}">
         </label>
     </div>
     <div id="snackbar" th:text="'Check!'"></div>

@@ -16,10 +16,10 @@ import org.springframework.stereotype.Service;
 public class RandomFinishService {
 
     private final RandomNumberFinishStateService finishStateService;
-    private final GameConfiguration gameConfiguration;
+    private final RandomNumberFinishGameConfiguration randomNumberFinishGameConfiguration;
 
     public RandomNumberFinishState refreshCurrentState(String userName) {
-        int randomNumber = RandomNumberGenerator.getRandomNumber(this.gameConfiguration.getMin(), this.gameConfiguration.getMax());
+        int randomNumber = RandomNumberGenerator.getRandomNumber(this.randomNumberFinishGameConfiguration.getMin(), this.randomNumberFinishGameConfiguration.getMax());
         RandomNumberFinishState state = this.finishStateService.getOrCreate(userName);
         state.setCurrentNumber(randomNumber);
         return this.finishStateService.save(state);
@@ -27,13 +27,13 @@ public class RandomFinishService {
 
     public void check(RandomNumberDto randomNumberDto, String userName) {
         var state = finishStateService.getOrCreate(userName);
-        state.addAndExecute(new FinishAction(FinishActionType.CHECK, this.gameConfiguration.getMin(), this.gameConfiguration.getMax()));
+        state.addAndExecute(new FinishAction(FinishActionType.CHECK, this.randomNumberFinishGameConfiguration.getMin(), this.randomNumberFinishGameConfiguration.getMax()));
         this.finishStateService.save(state);
     }
 
     public void miss(String userName) {
         var state = finishStateService.getOrCreate(userName);
-        state.addAndExecute(new FinishAction(FinishActionType.MISS, this.gameConfiguration.getMin(), this.gameConfiguration.getMax()));
+        state.addAndExecute(new FinishAction(FinishActionType.MISS, this.randomNumberFinishGameConfiguration.getMin(), this.randomNumberFinishGameConfiguration.getMax()));
         this.finishStateService.save(state);
     }
 
