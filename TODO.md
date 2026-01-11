@@ -1,3 +1,7 @@
 # TODOS
+## RandomFinish
 - Dashboard basteln um zweiten Spielmodus anzulegen
-- Zweiten Spielmodus implementieren bspw 121
+## X01
+- X01 mehr Details implementiere
+- Bot hinzufügen erstmal dumm
+
