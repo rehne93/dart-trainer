@@ -24,4 +24,8 @@ public class X01Stat {
         }
         scoreLeft -= score;
     }
+
+    public int getRound() {
+        return scores.size();
+    }
 }

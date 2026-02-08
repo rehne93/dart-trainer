@@ -123,6 +123,15 @@ body {
     color: white;
 }
 
+.input {
+    padding: 0.6rem;
+    font-size: 1.1rem;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    width: 120px;
+    text-align: center;
+}
+
 /* ---- Responsive ---- */
 @media (max-width: 600px) {
     .inputs {

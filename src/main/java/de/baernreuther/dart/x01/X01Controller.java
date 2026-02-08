@@ -27,4 +27,10 @@ public class X01Controller {
         this.x01Service.score(principal.getName(), score);
         return "redirect:/x01";
     }
+
+    @PostMapping("/reset")
+    public String reset(Principal principal) {
+        this.x01Service.reset(principal.getName());
+        return "redirect:/x01";
+    }
 }

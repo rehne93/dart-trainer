@@ -21,6 +21,11 @@ public class X01Service {
         return stat;
     }
 
+
+    public void reset(String username) {
+        this.games.remove(username);
+    }
+
     public void score(String username, int score) {
         this.games.get(username).score(score);
     }

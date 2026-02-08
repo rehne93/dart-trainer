@@ -1,4 +1,6 @@
 # TODOS
+## Allgemein
+- Hot Reload
 ## RandomFinish
 - Dashboard basteln um zweiten Spielmodus anzulegen
 ## X01

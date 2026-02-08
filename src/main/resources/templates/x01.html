@@ -1,7 +1,32 @@
-Hallo Welt
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="de">
+<head>
+    <meta charset="UTF-8">
+    <title>X01</title>
+    <link rel="stylesheet" th:href="@{/css/styles.css}"/>
+</head>
+<body>
+<main class="container">
 
-<span th:text="${{stat.scoreLeft}}"/>
-<form th:action="@{x01/score}" method="post">
-    <input type="text" name="score" />
-    <button type="submit">Score</button>
-</form>
+    <h2>Verbleibender Score</h2>
+
+    <div class="number" th:text="${stat.scoreLeft}">501</div>
+
+    <div class="buttons">
+        <form th:action="@{/x01/score}" method="post">
+            <input class="input" type="number" name="score" placeholder="Score eingeben" required autofocus />
+            <button class="btn success" type="submit">🎯 Score</button>
+        </form>
+
+        <form th:action="@{/x01/reset}" method="post">
+            <button class="btn success" type="submit">Reset</button>
+        </form>
+    </div>
+
+    <div>
+        <span th:text="${stat.getRound()}"/>
+        <span>. Runde</span>
+    </div>
+
+</main>
+</body>
